@@ -59,7 +59,7 @@ body {
 }
 
 /* Full‑screen flex container that centers the tuner UI */
-.container {
+.full-screen-container {
   width: 100%; /* span entire viewport width */
   height: 100%; /* fill viewport height */
   display: flex; /* enable flex layout */
@@ -70,7 +70,7 @@ body {
 
 .tuner-display {
   width: 100%; /* fill available container width */
-  max-width: 400px; /* limit to a reasonable size on large screens */
+  max-width: 1092.8px; /* limit to a reasonable size on large screens. 80% of 13-inch iPad. */
   display: flex; /* use flexbox for vertical layout */
   flex-direction: column; /* stack children top‑to‑bottom */
   gap: 40px; /* space between major sections */
@@ -87,17 +87,17 @@ body {
 }
 
 .gauge-label {
-  font-size: 22px; /* make the label legible */
+  font-size: 36px; /* make the label legible */
   color: var(--text-secondary); /* toned‑down grey colour */
-  width: 30px; /* fixed width for alignment */
+  width: 10px; /* fixed width for alignment */
   text-align: center; /* center the flat/sharp symbol */
 }
 
 .gauge-track {
   flex: 1; /* fills available horizontal space */
-  height: 16px; /* thickness of the tuning track */
+  height: 24px; /* thickness of the tuning track */
   background-color: var(--bg-secondary); /* gives it a coloured fill */
-  border-radius: 4px; /* rounds the ends so it’s pill‑shaped */
+  border-radius: 5px; /* rounds the ends so it’s pill‑shaped */
   position: relative; /* so the absolutely‑positioned needle can sit inside */
   border: 1px solid var(--border); /* thin outline for contrast */
   overflow: hidden; /* hides the needle when it moves off-track */
@@ -105,7 +105,7 @@ body {
 
 .gauge-needle {
   position: absolute; /* sit on top of the track */
-  width: 4px; /* thin vertical line */
+  width: 6px; /* thin vertical line */
   height: 100%; /* full height of the track element */
   background-color: var(--accent); /* default accent colour */
   left: 50%; /* start centred horizontally */
@@ -142,26 +142,29 @@ body {
 }
 
 .note-name {
-  font-size: 96px; /* large, easily readable pitch letter */
+  font-size: 48px; /* large, easily readable pitch letter */
   font-weight: 300; /* light weight for aesthetic */
   letter-spacing: -4px; /* tighten spacing for visual balance */
   line-height: 1; /* no extra vertical gap */
 }
 
 .note-frequency {
-  font-size: 16px; /* smaller than the note name */
+  font-size: 24px; /* smaller than the note name */
   color: var(--text-secondary); /* subdued grey text */
   font-variant-numeric: tabular-nums; /* align numbers vertically */
 }
 
 /* Status message area showing errors or success states */
 .status {
-  font-size: 14px; /* smaller status text */
+  font-size: 24px; /* smaller status text */
   color: var(--text-secondary); /* grey by default */
-  height: 20px; /* fixed height area */
+  /* allow text to wrap and grow vertically if needed */
+  height: 48px; /* Double the fontsize */
   display: flex; /* center the child span */
   align-items: center; /* vertical centering */
   justify-content: center; /* horizontal centering */
+  text-align: center; /* center wrapped lines */
+  padding: 0 8px; /* horizontal padding so very long messages don’t hit edges */
 }
 
 #statusText {
@@ -179,7 +182,7 @@ body {
 /* Styles for the start/stop toggle button */
 .btn-toggle {
   padding: 16px 32px; /* comfortable click area */
-  font-size: 18px; /* readable label */
+  font-size: 25px; /* readable label */
   font-weight: 600; /* semi-bold text */
   border: none; /* flat button style */
   border-radius: 8px; /* rounded corners */
@@ -210,8 +213,9 @@ body {
     gap: 20px;
   }
 
+  /* reduce text size when vertical space is very limited */
   .note-name {
-    font-size: 64px;
+    font-size: 48px;
   }
 
   .note-frequency {
