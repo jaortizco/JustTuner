@@ -42,15 +42,13 @@ export function updateUI(note) {
   if (!note) {
     // No note detected
     noteName.textContent = "—";
-    noteName.className = "";
     noteFrequency.textContent = "0.0 Hz";
     resetNeedle();
     return;
   }
 
-  // Update note name and clear any class left over from the previous note
+  // Update note name
   noteName.textContent = note.displayName;
-  noteName.className = "";
 
   // Update frequency display
   noteFrequency.textContent = `${note.frequency.toFixed(1)} Hz`;
