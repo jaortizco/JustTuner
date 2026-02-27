@@ -4,7 +4,7 @@ A simple yet accurate chromatic tuner.
 
 ## Quick start
 
-Just visit the [app website.](justtuner.pages.dev)
+Just visit the [app website.](https://justtuner.pages.dev)
 
 > **Note:** the tuner needs microphone access – grant permission when your browser asks for it, so the app can hear your instrument.
 
