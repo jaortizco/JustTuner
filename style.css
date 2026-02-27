@@ -1,0 +1,235 @@
+:root {
+  --bg-primary: #fafafa; /* slightly off-white */
+  --bg-secondary: #ededed; /* subtle contrast */
+  --text-primary: #000000;
+  --text-secondary: #555555; /* stronger grey than light mode */
+  --accent: #009e6b; /* darker accent by default */
+  --accent-warm: #ffb200;
+  --accent-cold: #ff4444;
+  --border: #bbbbbb; /* a touch darker */
+}
+
+/* Dark‑mode override. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #888888;
+    --accent: #00d084;
+    --accent-warm: #ffb200;
+    --accent-cold: #ff4444;
+    --border: #333333;
+  }
+}
+
+/* Light‑mode section is now the default and thus can be removed or left
+   for clarity; retained here for documentation purposes. */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f5f5f5;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --border: #cccccc;
+  }
+}
+
+/* Global reset rules and base element styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Full‑screen flex container that centers the tuner UI */
+.container {
+  width: 100%; /* span entire viewport width */
+  height: 100%; /* fill viewport height */
+  display: flex; /* enable flex layout */
+  align-items: center; /* vertically center content */
+  justify-content: center; /* horizontally center content */
+  padding: 20px; /* inner spacing around UI */
+}
+
+.tuner-display {
+  width: 100%; /* fill available container width */
+  max-width: 400px; /* limit to a reasonable size on large screens */
+  display: flex; /* use flexbox for vertical layout */
+  flex-direction: column; /* stack children top‑to‑bottom */
+  gap: 40px; /* space between major sections */
+  align-items: center; /* center items horizontally */
+}
+
+/* Layout and appearance of the cents gauge indicator */
+.gauge-container {
+  display: flex; /* horizontal layout for gauge and labels */
+  align-items: center; /* center vertically along track */
+  gap: 16px; /* space between flat and sharp labels */
+  width: 100%; /* stretch to container width */
+  justify-content: center; /* center gauge within parent */
+}
+
+.gauge-label {
+  font-size: 22px; /* make the label legible */
+  color: var(--text-secondary); /* toned‑down grey colour */
+  width: 30px; /* fixed width for alignment */
+  text-align: center; /* center the flat/sharp symbol */
+}
+
+.gauge-track {
+  flex: 1; /* fills available horizontal space */
+  height: 16px; /* thickness of the tuning track */
+  background-color: var(--bg-secondary); /* gives it a coloured fill */
+  border-radius: 4px; /* rounds the ends so it’s pill‑shaped */
+  position: relative; /* so the absolutely‑positioned needle can sit inside */
+  border: 1px solid var(--border); /* thin outline for contrast */
+  overflow: hidden; /* hides the needle when it moves off-track */
+}
+
+.gauge-needle {
+  position: absolute; /* sit on top of the track */
+  width: 4px; /* thin vertical line */
+  height: 100%; /* full height of the track element */
+  background-color: var(--accent); /* default accent colour */
+  left: 50%; /* start centred horizontally */
+  transform: translateX(-50%); /* truly centre using transform */
+  transition:
+    left 0.05s ease-out,
+    /* animate movement when tuning */ background-color 0.1s ease; /* animate colour changes */
+  box-shadow: 0 0 8px rgba(0, 208, 132, 0.6); /* soft glow effect */
+}
+
+.gauge-needle.in-tune {
+  background-color: var(--accent); /* green when perfectly tuned */
+  box-shadow: 0 0 12px rgba(0, 208, 132, 0.8); /* stronger glow */
+}
+
+.gauge-needle.out-of-tune {
+  background-color: var(--accent-warm); /* amber for slight mismatch */
+  box-shadow: 0 0 8px rgba(255, 178, 0, 0.6); /* matching glow colour */
+}
+
+.gauge-needle.very-out-of-tune {
+  background-color: var(--accent-cold); /* red when way off */
+  box-shadow: 0 0 8px rgba(255, 68, 68, 0.6); /* red glow */
+}
+
+/* Styling for the note name and frequency display */
+.note-display {
+  text-align: center; /* centre text inside */
+  flex: 1; /* allow to grow in flex layout */
+  display: flex; /* use flex for vertical centering */
+  flex-direction: column; /* stack name and frequency */
+  justify-content: center; /* center contents vertically */
+  gap: 8px; /* space between name and freq */
+}
+
+.note-name {
+  font-size: 96px; /* large, easily readable pitch letter */
+  font-weight: 300; /* light weight for aesthetic */
+  letter-spacing: -4px; /* tighten spacing for visual balance */
+  line-height: 1; /* no extra vertical gap */
+}
+
+.note-frequency {
+  font-size: 16px; /* smaller than the note name */
+  color: var(--text-secondary); /* subdued grey text */
+  font-variant-numeric: tabular-nums; /* align numbers vertically */
+}
+
+/* Status message area showing errors or success states */
+.status {
+  font-size: 14px; /* smaller status text */
+  color: var(--text-secondary); /* grey by default */
+  height: 20px; /* fixed height area */
+  display: flex; /* center the child span */
+  align-items: center; /* vertical centering */
+  justify-content: center; /* horizontal centering */
+}
+
+#statusText {
+  transition: color 0.2s ease; /* animate color changes on status text */
+}
+
+.status.error #statusText {
+  color: var(--accent-cold); /* red text when an error occurs */
+}
+
+.status.success #statusText {
+  color: var(--accent); /* accent colour for normal/ready state */
+}
+
+/* Styles for the start/stop toggle button */
+.btn-toggle {
+  padding: 16px 32px; /* comfortable click area */
+  font-size: 18px; /* readable label */
+  font-weight: 600; /* semi-bold text */
+  border: none; /* flat button style */
+  border-radius: 8px; /* rounded corners */
+  background-color: var(--accent); /* primary color */
+  color: #000000; /* black text for contrast */
+  cursor: pointer; /* show pointer on hover */
+  transition: all 0.2s ease; /* smooth state changes */
+  min-width: 180px; /* avoid shrinking too small */
+}
+
+.btn-toggle:active {
+  transform: scale(0.98); /* subtle press animation */
+}
+
+.btn-toggle:disabled {
+  opacity: 0.6; /* faded when disabled */
+  cursor: not-allowed; /* indicate non-interactive */
+}
+
+.btn-toggle.active {
+  background-color: var(--accent-cold);
+  color: #ffffff;
+}
+
+/* Responsive adjustments (small‑screen/media queries) */
+@media (max-height: 600px) {
+  .tuner-display {
+    gap: 20px;
+  }
+
+  .note-name {
+    font-size: 64px;
+  }
+
+  .note-frequency {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .tuner-display {
+    max-width: 100%;
+  }
+}
+
+/* Reduced‑motion and other accessibility media query rules */
+@media (prefers-reduced-motion: reduce) {
+  .gauge-needle,
+  #statusText,
+  .btn-toggle {
+    transition: none !important;
+  }
+}

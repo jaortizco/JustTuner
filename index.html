@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JustTuner</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="tuner-display">
+        <!-- Cents gauge -->
+        <div class="gauge-container">
+          <div class="gauge-label">♭</div>
+          <div class="gauge-track">
+            <div class="gauge-needle" id="needle"></div>
+          </div>
+          <div class="gauge-label">♯</div>
+        </div>
+
+        <!-- Note name and frequency -->
+        <div class="note-display">
+          <div class="note-name" id="noteName">—</div>
+          <div class="note-frequency" id="noteFrequency">0.0 Hz</div>
+        </div>
+
+        <!-- Status indicator -->
+        <div class="status" id="status">
+          <span id="statusText">Waiting for mic access...</span>
+        </div>
+
+        <!-- Control button -->
+        <button id="toggleButton" class="btn-toggle">Start Tuning</button>
+      </div>
+    </div>
+
+    <script type="module" src="src/app.js"></script>
+  </body>
+</html>
