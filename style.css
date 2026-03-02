@@ -77,6 +77,37 @@ body {
   align-items: center; /* center items horizontally */
 }
 
+/* Reference frequency selector */
+.reference-frequency {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.reference-frequency select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 24px 4px 8px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.reference-frequency select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 /* Layout and appearance of the cents gauge indicator */
 .gauge-container {
   display: flex; /* horizontal layout for gauge and labels */
@@ -233,7 +264,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .gauge-needle,
   #statusText,
-  .btn-toggle {
+  .btn-toggle,
+  .reference-frequency select {
     transition: none !important;
   }
 }

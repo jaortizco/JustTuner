@@ -9,6 +9,17 @@
   <body>
     <div class="full-screen-container">
       <div class="tuner-display">
+        <!-- Reference frequency selector -->
+        <div class="reference-frequency">
+          <label for="referenceFrequency">A4 =</label>
+          <select id="referenceFrequency">
+            <option value="415">415 Hz</option>
+            <option value="432">432 Hz</option>
+            <option value="440" selected>440 Hz</option>
+            <option value="442">442 Hz</option>
+          </select>
+        </div>
+
         <!-- Cents gauge -->
         <div class="gauge-container">
           <div class="gauge-label">♭</div>
