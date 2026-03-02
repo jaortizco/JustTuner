@@ -232,18 +232,27 @@ body {
 }
 
 /* Responsive adjustments (small‑screen/media queries) */
-@media (max-height: 600px) {
+@media (max-height: 440px) {
   .tuner-display {
-    gap: 20px;
+    gap: 8px;
   }
 
   /* reduce text size when vertical space is very limited */
   .note-name {
-    font-size: 48px;
+    font-size: 36px;
   }
 
   .note-frequency {
     font-size: 14px;
+  }
+
+  .status {
+    font-size: 16px; /* smaller status text */
+    height: 16px; /* match the smaller font size */
+  }
+
+  .btn-toggle {
+    font-size: 20px; /* readable label */
   }
 }
 
