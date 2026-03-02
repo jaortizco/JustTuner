@@ -1,6 +1,9 @@
 const SEMITONE_RATIO = 2 ** (1 / 12);
-const REFERENCE_FREQUENCY = 440; // A4
+const DEFAULT_REFERENCE_FREQUENCY = 440; // A4
 const REFERENCE_MIDI = 69; // MIDI note number for A4
+
+/** @type {number} */
+let referenceFrequency = DEFAULT_REFERENCE_FREQUENCY;
 
 const NOTE_NAMES = [
   "C",
@@ -20,12 +23,12 @@ const NOTE_NAMES = [
 /**
  * Convert frequency to MIDI note number (floating point)
  * MIDI: C-1 = 0, C0 = 12, A4 = 69, C8 = 108
- * Uses REFERENCE_FREQUENCY (A4 = 440 Hz) and REFERENCE_MIDI (69)
+ * Uses referenceFrequency (default A4 = 440 Hz) and REFERENCE_MIDI (69)
  * @param {number} frequency - Frequency in Hz
  * @returns {number} MIDI note number (floating point)
  */
 function frequencyToMidiNote(frequency) {
-  return REFERENCE_MIDI + 12 * Math.log2(frequency / REFERENCE_FREQUENCY);
+  return REFERENCE_MIDI + 12 * Math.log2(frequency / referenceFrequency);
 }
 
 /**
@@ -34,7 +37,7 @@ function frequencyToMidiNote(frequency) {
  * @returns {number} Frequency in Hz
  */
 function midiNoteToFrequency(midiNote) {
-  return REFERENCE_FREQUENCY * SEMITONE_RATIO ** (midiNote - REFERENCE_MIDI);
+  return referenceFrequency * SEMITONE_RATIO ** (midiNote - REFERENCE_MIDI);
 }
 
 /**
@@ -50,6 +53,28 @@ function midiNoteToName(midiNote) {
   const octave = Math.floor(midiNote / 12) - 1;
 
   return { name, octave };
+}
+
+/**
+ * Get the current reference frequency.
+ * @returns {number} Reference frequency in Hz
+ */
+export function getReferenceFrequency() {
+  return referenceFrequency;
+}
+
+/**
+ * Set a new reference frequency for A4.
+ * @param {number} frequency - Reference frequency in Hz (finite and > 0)
+ * @returns {void}
+ */
+export function setReferenceFrequency(frequency) {
+  if (!Number.isFinite(frequency) || frequency <= 0) {
+    throw new RangeError(
+      `Reference frequency must be a finite number > 0, got ${frequency}`,
+    );
+  }
+  referenceFrequency = frequency;
 }
 
 /**

@@ -5,7 +5,7 @@ import {
   getAudioContext,
 } from "./audio-input.js";
 import { detectPitch } from "./yin-algorithm.js";
-import { frequencyToNote } from "./note-mapping.js";
+import { frequencyToNote, setReferenceFrequency } from "./note-mapping.js";
 import { updateUI } from "./tuner-ui.js";
 
 // ── constants ──
@@ -30,6 +30,8 @@ let toggleButton;
 let statusText;
 /** @type {HTMLElement} */
 let statusElement;
+/** @type {HTMLSelectElement} */
+let referenceFrequencySelect;
 
 /**
  * Fetch a DOM element by ID and ensure it exists.
@@ -200,6 +202,18 @@ async function handleToggleClick() {
 }
 
 /**
+ * Change handler for the reference frequency dropdown.
+ * Updates the note-mapping module and clears the smoothing buffer so
+ * stale data from a different reference doesn't bleed through.
+ * @returns {void}
+ */
+function handleReferenceChange() {
+  const value = Number(referenceFrequencySelect.value);
+  setReferenceFrequency(value);
+  frequencyHistory = [];
+}
+
+/**
  * Query DOM elements and attach event listeners. Called once on load.
  */
 function initApp() {
@@ -209,9 +223,15 @@ function initApp() {
   );
   statusText = getRequiredElement("statusText");
   statusElement = getRequiredElement("status");
+  referenceFrequencySelect = /** @type {HTMLSelectElement} */ (
+    getRequiredElement("referenceFrequency")
+  );
 
   // button handler
   toggleButton.addEventListener("click", handleToggleClick);
+
+  // reference frequency handler
+  referenceFrequencySelect.addEventListener("change", handleReferenceChange);
 }
 
 // start the app

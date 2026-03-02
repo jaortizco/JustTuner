@@ -77,6 +77,30 @@ body {
   align-items: center; /* center items horizontally */
 }
 
+/* Reference frequency selector */
+.reference-frequency {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.reference-frequency select {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.reference-frequency select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
 /* Layout and appearance of the cents gauge indicator */
 .gauge-container {
   display: flex; /* horizontal layout for gauge and labels */
@@ -233,7 +257,8 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .gauge-needle,
   #statusText,
-  .btn-toggle {
+  .btn-toggle,
+  .reference-frequency select {
     transition: none !important;
   }
 }
